@@ -228,7 +228,7 @@ M.open = function()
     
     for key, action in pairs(keymaps) do
         vim.api.nvim_buf_set_keymap(popup_buf, 'n', key, 
-            string.format([[<cmd>lua require('buffhunter.popup').%s<CR>]], action), 
+            string.format([[<cmd>lua require('buffhunter').%s<CR>]], action), 
             keymap_opts)
     end
 
