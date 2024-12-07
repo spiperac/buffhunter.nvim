@@ -4,7 +4,7 @@ BuffHunter is a lightweight and highly functional Neovim plugin designed to simp
 
 ## Screenshots
 
-![image](https://github.com/user-attachments/assets/00b2a9db-ee1f-405a-99b1-d0698b1fa08b)
+![image](https://github.com/user-attachments/assets/c52322a7-6498-40a6-a306-59ad0fd03af8)
 
 ## Features
 
