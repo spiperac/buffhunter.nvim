@@ -62,7 +62,7 @@ Example of plugins/buffhunter.lua:
 ```lua
 return function()
     require('buffhunter').setup {
-      keymap = {
+      keymaps = {
         open = '<CR>',         -- Open selected buffer
         close = 'c',           -- Close selected buffer
         split_h = 's',         -- Open in horizontal split
