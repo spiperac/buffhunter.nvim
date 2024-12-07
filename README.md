@@ -57,16 +57,20 @@ use {
 
 BuffHunter offers flexible configuration options. Below is an example:
 
+Example of plugins/buffhunter.lua:
+
 ```lua
-require('buffhunter').setup {
-  keymap = {
-    open = '<CR>',         -- Open selected buffer
-    close = 'x',           -- Close selected buffer
-    split_h = 's',         -- Open in horizontal split
-    split_v = 'v',         -- Open in vertical split
-  },
-  git_signs = true,        -- Enable Git status display
-}
+return function()
+    require('buffhunter').setup {
+      keymap = {
+        open = '<CR>',         -- Open selected buffer
+        close = 'c',           -- Close selected buffer
+        split_h = 's',         -- Open in horizontal split
+        split_v = 'v',         -- Open in vertical split
+      },
+      git_signs = true,        -- Enable Git status display
+    }
+end
 ```
 More options in init.lua.
 

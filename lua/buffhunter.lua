@@ -216,13 +216,13 @@ M.open = function()
     -- Set keymaps
     local keymap_opts = { noremap = true, silent = true }
     local keymaps = {
-        ['k'] = 'move_selection(-1)',
-        ['j'] = 'move_selection(1)',
+        [M.config.keymaps.move_down] = 'move_selection(-1)',
+        [M.config.keymaps.move_up] = 'move_selection(1)',
         ['<CR>'] = 'open_selected_buffer()',
-        ['x'] = 'close_selected_buffer()',
-        ['q'] = 'close()',
-        ['s'] = 'open_in_split("s")',
-        ['v'] = 'open_in_split("v")',
+        [M.config.keymaps.delete] = 'close_selected_buffer()',
+        [M.config.keymaps.close] = 'close()',
+        [M.config.keymaps.hsplit] = 'open_in_split("s")',
+        [M.config.keymaps.vsplit] = 'open_in_split("v")',
         ['<Esc>'] = 'close()'
     }
     
