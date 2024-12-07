@@ -85,7 +85,7 @@ end
 local function setup_highlights()
     vim.api.nvim_set_hl(0, "GitChanges", { fg = "#E5C07B" })  -- Yellow for modified
     vim.api.nvim_set_hl(0, "GitStaged", { fg = "#98C379" })   -- Green for staged
-    vim.api.nvim_set_hl(0, "GitClean", { fg = "#56B6C2" })    -- Blue for clean/committed
+    vim.api.nvim_set_hl(0, "GitClean", { fg = "#445254" })    -- Gray-ish for clean/committed
 end
 
 
