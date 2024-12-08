@@ -44,6 +44,23 @@ use {
 }
 ```
 
+Or you can create plugins/buffhunter.lua in your nvim config folder and use:
+```lua
+return function()
+    require('buffhunter').setup {
+      keymaps = {
+        open = '<CR>',         -- Open selected buffer
+        close = 'q',           -- Close selected buffer
+        delete = 'x',
+        split_h = 's',         -- Open in horizontal split
+        split_v = 'v',         -- Open in vertical split
+      },
+      git_signs = true,        -- Enable Git status display
+    }
+end
+
+```
+
 
 ## Usage
 
@@ -51,7 +68,13 @@ use {
 - Perform buffer actions directly from the popup list.
 - Customize key mappings and actions through the setup function.
 
----
+Additionally, you can add a keybind like:
+```lua
+map("n", "<C-l>", ':BuffHunter<CR>', opts)
+
+```
+
+And by pressint CTRL + L, BuffHunter popup window will showup.
 
 ## Configuration
 
