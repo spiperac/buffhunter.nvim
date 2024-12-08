@@ -216,8 +216,8 @@ M.open = function()
     -- Set keymaps
     local keymap_opts = { noremap = true, silent = true }
     local keymaps = {
-        [M.config.keymaps.move_down] = 'move_selection(-1)',
-        [M.config.keymaps.move_up] = 'move_selection(1)',
+        [M.config.keymaps.move_up] = 'move_selection(-1)',
+        [M.config.keymaps.move_down] = 'move_selection(1)',
         ['<CR>'] = 'open_selected_buffer()',
         [M.config.keymaps.delete] = 'close_selected_buffer()',
         [M.config.keymaps.close] = 'close()',
