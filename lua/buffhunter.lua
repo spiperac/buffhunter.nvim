@@ -125,7 +125,7 @@ M.open = function()
         height = height,
         row = row,
         col = col,
-        border = "double",
+        border = M.config.border,
         style = "minimal",
         zindex = 50,
     }
