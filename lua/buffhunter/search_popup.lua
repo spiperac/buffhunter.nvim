@@ -1,4 +1,4 @@
-local Buffers = require("buffhunter.buffers")
+local Buffers = require("buffhunter.bufferslist")
 local ListPopup = require("buffhunter.list_popup")
 
 local SearchPopup = {}
@@ -53,7 +53,7 @@ SearchPopup.open = function(list_win_pos)
     vim.api.nvim_buf_attach(search_buf, false, {
         on_lines = function()
             local query = vim.trim(vim.api.nvim_buf_get_lines(search_buf, 0, -1, false)[1] or "")
-            local buffers = Buffers.get_open_buffers()
+            local buffers = Buffers.get_buffers()
             shared_state.query = query
             ListPopup.update(query)
         end,
