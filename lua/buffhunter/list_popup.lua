@@ -1,4 +1,3 @@
-local Buffers = require("buffhunter.buffers")
 local BufferList = require("buffhunter.bufferlist")
 local Formatter = require("buffhunter.formatter")
 
