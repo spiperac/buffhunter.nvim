@@ -4,6 +4,7 @@ local ListPopup = require("buffhunter.list_popup") -- To update the list popup
 
 SearchPopup = {}
 
+local search_win = nil
 local config = nil -- This will hold the shared configuration
 local shared_state = {
     buffers = {}, -- Store the initial list of buffers
@@ -16,17 +17,18 @@ SearchPopup.setup = function(shared_config)
     shared_state = state or shared_state
 end
 
-SearchPopup.open = function () 
-  -- Calculate the dimensions and position of the search input window
---
-  local width = math.floor(vim.o.columns * 0.7)
-  local height = math.floor(vim.o.lines * 0.4)
-  local row = math.floor((vim.o.lines - height) / 2)
-  local col = math.floor((vim.o.columns - width) / 2)
-  local search_height = 1
-  local search_width = width -- Match the width of the main popup
-  local search_row = row + height -- Position it directly below the main popup
-  local search_col = col -- Align it horizontally with the main popup
+SearchPopup.open = function (list_win_pos) 
+
+    -- Get the dimensions and position of the list window from the passed `list_win_pos`
+    local list_win_height = list_win_pos.height
+
+    -- Calculate the position for the search window directly below the list popup
+    local search_height = 1
+    local search_width = list_win_pos.width  -- Same width as the list window
+    local search_row = list_win_pos.row + list_win_pos.height + 1  -- Place search below the list window
+    local search_col = list_win_pos.col  -- Align search horizontally with list popup
+
+    -- Create a buffer f
 
   -- Create a buffer for the search input
   local search_buf = vim.api.nvim_create_buf(false, true)
@@ -46,7 +48,9 @@ SearchPopup.open = function ()
   }
 
   -- Open the search input window
-  local search_win = vim.api.nvim_open_win(search_buf, true, search_opts)
+    if not search_win or not vim.api.nvim_win_is_valid(search_win) then
+        search_win = vim.api.nvim_open_win(search_buf, true, search_opts)
+    end
 
   -- Optional: Configure the buffer for the search input
   vim.fn.prompt_setprompt(search_buf, "> ")
@@ -66,6 +70,16 @@ SearchPopup.open = function ()
       end,
   })
 
+  return search_win
 end 
+
+SearchPopup.close = function()
+    print("Closing search")
+     -- vim.api.nvim_win_close(search_win, true)
+
+    if search_win and vim.api.nvim_win_is_valid(search_win) then
+        vim.api.nvim_win_close(search_win, true)
+    end
+end
 
 return SearchPopup
