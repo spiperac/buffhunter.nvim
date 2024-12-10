@@ -1,5 +1,6 @@
 local search_popup = require("buffhunter.search_popup")
 local list_popup = require("buffhunter.list_popup")
+local buffers = require("buffhunter.buffers")
 
 local M = {}
 local config = {
@@ -21,14 +22,21 @@ local config = {
 
 -- Your configuration defaults
 M.config = config
+-- Shared state for popups
+local shared_state = {
+    buffers = {}, -- Store the list of buffers
+    query = "",   -- Store the current search query
+}
+
 -- Setup function that will be called by lazy.nvim
 function M.setup(opts)
     -- Merge user config with defaults
     M.config = vim.tbl_deep_extend("force", M.config, opts or {})
   
     -- Pass the configuration to the search_popup module
+    shared_state.buffers = buffers.get_open_buffers()
+    search_popup.setup(M.config, shared_state)
     list_popup.setup(M.config)
-    search_popup.setup(M.config)
 
     -- Load the popup module
     require('buffhunter')
