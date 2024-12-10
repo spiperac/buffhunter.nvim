@@ -34,6 +34,7 @@ SearchPopup.open = function(list_win_pos)
 
     if not search_win or not vim.api.nvim_win_is_valid(search_win) then
         search_win = vim.api.nvim_open_win(search_buf, true, search_opts)
+        shared_state.search_win = search_win
     end
 
     -- Set up buffer options

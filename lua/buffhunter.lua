@@ -50,8 +50,13 @@ function M.setup(opts)
 end
 
 M.toggle = function()
-    local list_win_pos = list_popup.open()
-    shared_state.search_win = search_popup.open(list_win_pos)
+    if shared_state.list_win and vim.api.nvim_win_is_valid(shared_state.list_win) then
+      list_popup.close()
+      search_popup.close()
+    else
+      local list_win_pos = list_popup.open()
+      shared_state.search_win = search_popup.open(list_win_pos)
+    end
 end
 
 M.close = function()

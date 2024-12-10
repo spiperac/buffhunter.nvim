@@ -43,6 +43,7 @@ ListPopup.open = function()
 
     if not list_win or not vim.api.nvim_win_is_valid(list_win) then
         list_win = vim.api.nvim_open_win(list_buf, true, list_opts)
+        shared_state.list_win = list_win
     end
 
     vim.bo[list_buf].buftype = "nofile"
