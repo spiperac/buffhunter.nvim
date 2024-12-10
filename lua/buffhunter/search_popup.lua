@@ -1,4 +1,4 @@
-local Buffers = require("buffhunter.bufferslist")
+local Buffers = require("buffhunter.bufferlist")
 local ListPopup = require("buffhunter.list_popup")
 
 local SearchPopup = {}
