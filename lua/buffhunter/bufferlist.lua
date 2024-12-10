@@ -3,12 +3,14 @@ local M = {}
 -- bufferlist.lua
 local has_devicons, devicons = pcall(require, 'nvim-web-devicons')
 
-local function get_icon(filetype)
+local function get_file_icon(filename)
+    local has_devicons, devicons = pcall(require, 'nvim-web-devicons')
     if has_devicons then
-        local icon = devicons.get_icon_by_filetype(filetype)
-        return icon and (icon .. " ") or ""
+        local extension = filename:match("^.+%.(.+)$") or ""
+        local icon, icon_hl = devicons.get_icon(filename, extension, { default = true })
+        return icon or "", icon_hl or ""
     end
-    return ""
+    return "", ""
 end
 
 M.BufferEntry = {
@@ -17,7 +19,7 @@ M.BufferEntry = {
             bufnr = bufnr,
             name = name,
             filetype = vim.api.nvim_buf_get_option(bufnr, "filetype"),
-            icon = "", -- Can be populated by optional icon provider
+            icon = get_file_icon(name), -- Can be populated by optional icon provider
             modified = vim.api.nvim_buf_get_option(bufnr, "modified"),
             -- Add any other buffer metadata you want
         }
