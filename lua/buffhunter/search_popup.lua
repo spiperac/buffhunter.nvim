@@ -55,7 +55,7 @@ SearchPopup.open = function(list_win_pos)
             local query = vim.trim(vim.api.nvim_buf_get_lines(search_buf, 0, -1, false)[1] or "")
             local buffers = Buffers.get_open_buffers()
             shared_state.query = query
-            ListPopup.update(buffers, query)
+            ListPopup.update(query)
         end,
     })
 

@@ -1,6 +1,6 @@
 local search_popup = require("buffhunter.search_popup")
 local list_popup = require("buffhunter.list_popup")
-local buffers = require("buffhunter.buffers")
+local buffers = require("buffhunter.bufferlist")
 
 local M = {}
 local config = {
@@ -36,7 +36,7 @@ function M.setup(opts)
     M.config = vim.tbl_deep_extend("force", M.config, opts or {})
     
     -- Set up initial state
-    shared_state.buffers = buffers.get_open_buffers()
+    shared_state.buffers = buffers.get_buffers()
     local keymap_opts = { noremap = true, silent = true }
     vim.api.nvim_set_keymap('n', '<ESC>', ':lua require("buffhunter").close()<CR>', keymap_opts)
     -- Initialize both popups with shared state

@@ -1,4 +1,6 @@
 local Buffers = require("buffhunter.buffers")
+local BufferList = require("buffhunter.bufferlist")
+local Formatter = require("buffhunter.formatter")
 
 local ListPopup = {}
 local config = nil
@@ -13,7 +15,7 @@ ListPopup.setup = function(shared_config, state)
 end
 
 ListPopup.open = function()
-    local buffers = Buffers.get_open_buffers()
+    local buffers = BufferList.get_buffers()
     if not buffers or #buffers == 0 then
         buffers = { { bufnr = -1, name = "[No Buffers]" } }
     end
@@ -49,28 +51,24 @@ ListPopup.open = function()
     vim.wo[list_win].winhl = 'Normal:Normal'
     vim.wo[list_win].winblend = 0
     vim.wo[list_win].wrap = false
-    vim.wo[list_win].cursorline = true
+    vim.wo[list_win].cursorline = false
 
     -- Initialize the filtered buffers
     shared_state.filtered_buffers = buffers
-    ListPopup.update(buffers, "")
+    ListPopup.update("")
 
     return { row = row, col = col, height = height, width = width }
 end
 
-ListPopup.update = function(buffers, query)
-    if not list_buf or not vim.api.nvim_buf_is_valid(list_buf) then
-        return
-    end
-
-    -- Update filtered_buffers in shared_state
+ListPopup.update = function(query)
+    local buffers = BufferList.get_buffers({ with_icons = config.icons })
     local filtered_lines = {}
-    shared_state.filtered_buffers = {}
-
+    shared_state.filtered_buffers = {}  -- Reset filtered buffers
+    
     for _, buffer in ipairs(buffers) do
         if query == "" or string.match(buffer.name:lower(), query:lower()) then
-            table.insert(shared_state.filtered_buffers, buffer)
-            table.insert(filtered_lines, string.format("%d: %s", buffer.bufnr, buffer.name))
+            table.insert(shared_state.filtered_buffers, buffer)  -- Store complete buffer objects
+            table.insert(filtered_lines, Formatter.format_buffer_line(buffer, config))  -- Store formatted lines
         end
     end
 
@@ -112,7 +110,7 @@ ListPopup.move_selection = function(offset)
     ))
 
     -- Refresh the display
-    ListPopup.update(shared_state.filtered_buffers, shared_state.query)
+    ListPopup.update(shared_state.query)
 end
 
 ListPopup.close = function()
