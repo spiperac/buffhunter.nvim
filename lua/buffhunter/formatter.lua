@@ -1,11 +1,9 @@
 -- formatter.lua
 local M = {}
 
-
-
 M.format_buffer_line = function(buffer, opts)
     local padding = math.floor(vim.o.columns * 0.7)
- - #buffer.name - #buffer.icon - 8
+ - #buffer.name - #buffer.icon - 10
     if padding < 0 then padding = 0 end
     
     local parts = {}
@@ -21,28 +19,12 @@ M.format_buffer_line = function(buffer, opts)
     if buffer.modified then
         table.insert(parts, "[+]")
     end
-    
+
     return table.concat(parts, " ")
 end
 
-M.make_highlights = function(popup_buf)
-    local highlights = {}
-    -- Store highlight positions
-    table.insert(highlights, {
-        line = i - 1,
-        number = { start_col = 0, end_col = 2, hl = "Number" },
-        icon = { start_col = 5, end_col = 5 + #icon, hl = icon_hl },
-        path = { start_col = 5 + #icon + 1, end_col = 5 + #icon + #name + 1, hl = "Number" },
-        git = { 
-            start_col = #line - #git_status, 
-            end_col = #line, 
-            hl = git_hl 
-        }
-    })
-    end
-
-    -- Apply highlights using extmarks
-    local ns = vim.api.nvim_create_namespace('buffhunter')
+M.make_highlights = function(popup_buf, highlights, ns)
+    
     
     for _, hl in ipairs(highlights) do
         -- Buffer number
@@ -53,6 +35,7 @@ M.make_highlights = function(popup_buf)
         
         -- File icon (if exists)
         if hl.icon.hl ~= "" then
+            print(hl.icon.hl)
             vim.api.nvim_buf_set_extmark(popup_buf, ns, hl.line, hl.icon.start_col, {
                 end_col = hl.icon.end_col,
                 hl_group = hl.icon.hl
@@ -65,14 +48,7 @@ M.make_highlights = function(popup_buf)
             hl_group = "Number"
         })
         
-        -- Git status (if exists) - WIP -
-        if hl.git.hl ~= "" then
-            vim.api.nvim_buf_set_extmark(popup_buf, ns, hl.line, hl.git.start_col, {
-                end_col = hl.git.end_col,
-                hl_group = hl.git.hl,
-                hl_mode = "combine"  -- This ensures only specified attributes are applied
-            })
-        end
     end
+end
 
 return M

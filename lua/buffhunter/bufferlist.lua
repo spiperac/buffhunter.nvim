@@ -50,11 +50,13 @@ end
 
 M.BufferEntry = {
     new = function(bufnr, name)
+        icon, icon_hl = get_file_icon(name)
         return {
             bufnr = bufnr,
             name = name ~= "" and vim.fn.fnamemodify(name, ":~:."),
             filetype = vim.api.nvim_buf_get_option(bufnr, "filetype"),
-            icon = get_file_icon(name), -- Can be populated by optional icon provider
+            icon = icon, -- Can be populated by optional icon provider
+            icon_hl = icon_hl,
             indicator = "",
             git_sign = get_git_status(nufnr),
             modified = vim.api.nvim_buf_get_option(bufnr, "modified"),

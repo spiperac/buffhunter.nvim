@@ -63,6 +63,8 @@ ListPopup.open = function()
 
     -- Initialize the filtered buffers
     shared_state.filtered_buffers = buffers
+
+    -- Update buffer list
     ListPopup.update("")
 
     return { row = row, col = col, height = height, width = width }
@@ -72,13 +74,24 @@ ListPopup.update = function(query)
     local buffers = BufferList.get_buffers({ with_icons = config.icons })
     local filtered_lines = {}
     shared_state.filtered_buffers = {}  -- Reset filtered buffers
-    
-    for i, buffer in ipairs(buffers) do
+    local highlights = {}
+
+    for i, buffer in ipairs(buffers) do 
         if query == "" or string.match(buffer.name:lower(), query:lower()) then
             buffer.indicator = get_buffer_indicator(i)
             table.insert(shared_state.filtered_buffers, buffer)  -- Store complete buffer objects
             table.insert(filtered_lines, Formatter.format_buffer_line(buffer, config))  -- Store formatted lines
         end
+    end
+    
+    for i, buffer in ipairs(shared_state.filtered_buffers) do
+            -- Store highlight positions
+            table.insert(highlights, {
+                line = i - 1,
+                number = { start_col = 0, end_col = 2, hl = "Number" },
+                icon = { start_col = 5, end_col = 5 + #buffer.icon, hl = buffer.icon_hl },
+                path = { start_col = 5 + #buffer.icon + 1, end_col = 5 + #buffer.icon + #buffer.name + 1, hl = "Comment" },
+            })
     end
 
     if #filtered_lines == 0 then
@@ -91,6 +104,9 @@ ListPopup.update = function(query)
         shared_state.selected = 1
     end
 
+    -- Make highlights namespace
+    local ns = vim.api.nvim_create_namespace('buffhunter')
+
     -- Update the buffer content
     vim.schedule(function()
         vim.bo[list_buf].modifiable = true
@@ -99,11 +115,14 @@ ListPopup.update = function(query)
 
         -- Clear existing highlights
         vim.api.nvim_buf_clear_namespace(list_buf, -1, 0, -1)
-        
+
         -- Add highlight for selected line
         if #filtered_lines > 0 and filtered_lines[1] ~= "[No Matching Buffers]" then
+            -- Apply hightlights 
+            Formatter.make_highlights(list_buf, highlights, ns)
             vim.api.nvim_buf_add_highlight(list_buf, -1, "Visual", shared_state.selected - 1, 0, -1)
         end
+        highlights = {}
     end)
 end
 
