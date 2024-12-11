@@ -4,32 +4,32 @@ local buffers = require("buffhunter.bufferlist")
 
 local M = {}
 local config = {
-    width = 0.7,
-    height = 0.4,
-    border = "double",
-    icons = true,
-    git_signs = true,
-    keymaps = {
-        close = "<ESC>",
-        move_up = "k",
-        move_down = "j",
-        select = "<CR>",
-        delete = "x",
-        hsplit = "s",
-        vsplit = "v"
-    }
+  width = 0.7,
+  height = 0.4,
+  border = "double",
+  icons = true,
+  git_signs = true,
+  keymaps = {
+    close = "<ESC>",
+    move_up = "k",
+    move_down = "j",
+    select = "<CR>",
+    delete = "x",
+    hsplit = "s",
+    vsplit = "v"
+  }
 }
 
 M.config = config
 
 -- Shared state
 local shared_state = {
-    buffers = {},
-    filtered_buffers = {},
-    query = "",
-    selected = 1,
-    list_win = nil,
-    search_win = nil,
+  buffers = {},
+  filtered_buffers = {},
+  query = "",
+  selected = 1,
+  list_win = nil,
+  search_win = nil,
 }
 
 function M.setup(opts)
