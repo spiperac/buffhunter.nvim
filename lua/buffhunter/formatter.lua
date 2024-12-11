@@ -3,7 +3,7 @@ local M = {}
 
 M.format_buffer_line = function(buffer, opts)
     local padding = math.floor(vim.o.columns * 0.7)
- - #buffer.name - #buffer.icon - 10
+ - #buffer.name - #buffer.icon - 12
     if padding < 0 then padding = 0 end
     
     local parts = {}
