@@ -84,13 +84,14 @@ ListPopup.update = function(query)
         end
     end
     
+    -- Store highlight positions
     for i, buffer in ipairs(shared_state.filtered_buffers) do
-            -- Store highlight positions
+            local buffer_number_len = string.len(tostring(buffer.bufnr)) + 4
             table.insert(highlights, {
                 line = i - 1,
-                number = { start_col = 0, end_col = 2, hl = "Number" },
-                icon = { start_col = 5, end_col = 5 + #buffer.icon, hl = buffer.icon_hl },
-                path = { start_col = 5 + #buffer.icon + 1, end_col = 5 + #buffer.icon + #buffer.name + 1, hl = "Comment" },
+                number = { start_col = 2, end_col = buffer_number_len,  hl = "Number" },
+                icon = { start_col = buffer_number_len, end_col = buffer_number_len + #buffer.icon + 2, hl = buffer.icon_hl },
+                path = { start_col = buffer_number_len + #buffer.icon, end_col = buffer_number_len + #buffer.icon + #buffer.name + 1, hl = "Comment" },
             })
     end
 

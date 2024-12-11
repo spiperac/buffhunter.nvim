@@ -35,7 +35,6 @@ M.make_highlights = function(popup_buf, highlights, ns)
         
         -- File icon (if exists)
         if hl.icon.hl ~= "" then
-            print(hl.icon.hl)
             vim.api.nvim_buf_set_extmark(popup_buf, ns, hl.line, hl.icon.start_col, {
                 end_col = hl.icon.end_col,
                 hl_group = hl.icon.hl
