@@ -55,6 +55,7 @@ M.BufferEntry = {
             name = name ~= "" and vim.fn.fnamemodify(name, ":~:."),
             filetype = vim.api.nvim_buf_get_option(bufnr, "filetype"),
             icon = get_file_icon(name), -- Can be populated by optional icon provider
+            indicator = "",
             git_sign = get_git_status(nufnr),
             modified = vim.api.nvim_buf_get_option(bufnr, "modified"),
             -- Add any other buffer metadata you want

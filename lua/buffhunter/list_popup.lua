@@ -6,6 +6,14 @@ local config = nil
 local shared_state = nil
 local list_buf, list_win = nil, nil
 
+local function get_buffer_indicator(line)
+    if line == shared_state.selected then
+        return ">"
+    else
+        return " "
+    end
+end
+
 ListPopup.setup = function(shared_config, state)
     config = shared_config
     shared_state = state
@@ -65,8 +73,9 @@ ListPopup.update = function(query)
     local filtered_lines = {}
     shared_state.filtered_buffers = {}  -- Reset filtered buffers
     
-    for _, buffer in ipairs(buffers) do
+    for i, buffer in ipairs(buffers) do
         if query == "" or string.match(buffer.name:lower(), query:lower()) then
+            buffer.indicator = get_buffer_indicator(i)
             table.insert(shared_state.filtered_buffers, buffer)  -- Store complete buffer objects
             table.insert(filtered_lines, Formatter.format_buffer_line(buffer, config))  -- Store formatted lines
         end
