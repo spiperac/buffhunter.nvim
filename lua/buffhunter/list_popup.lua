@@ -59,7 +59,7 @@ ListPopup.open = function()
   vim.wo[list_win].winhl = 'Normal:Normal'
   vim.wo[list_win].winblend = 0
   vim.wo[list_win].wrap = false
-  vim.wo[list_win].cursorline = true
+  vim.wo[list_win].cursorline = false
 
   -- Initialize the filtered buffers
   shared_state.filtered_buffers = buffers
