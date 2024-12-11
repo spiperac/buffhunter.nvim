@@ -1,14 +1,15 @@
 # BuffHunter
 
-BuffHunter is a lightweight and highly functional Neovim plugin designed to simplify buffer management. It provides an intuitive popup list of all currently opened buffers and offers a variety of actions to help you work more efficiently.
+BuffHunter is a lightweight Neovim plugin designed to simplify buffer management. It provides an intuitive searchable popup list of all currently opened buffers and offers a variety of actions to help you work more efficiently.
 
 ## Screenshots
 
-![image](https://github.com/user-attachments/assets/c52322a7-6498-40a6-a306-59ad0fd03af8)
+![image](https://github.com/user-attachments/assets/77912831-df66-4b8d-94dd-19d0107ccc1c)
 
 ## Features
 
 - **Interactive Buffer List**: View all open buffers in a clean, easy-to-navigate popup.
+- ** Filter buffers in the list.
 - **Quick Actions**:
   - Open buffers.
   - Close buffers.
