@@ -59,7 +59,7 @@ ListPopup.open = function()
   vim.wo[list_win].winhl = 'Normal:Normal'
   vim.wo[list_win].winblend = 0
   vim.wo[list_win].wrap = false
-  vim.wo[list_win].cursorline = false
+  vim.wo[list_win].cursorline = true
 
   -- Initialize the filtered buffers
   shared_state.filtered_buffers = buffers
@@ -86,7 +86,7 @@ ListPopup.update = function(query)
   
   -- Store highlight positions
   for i, buffer in ipairs(shared_state.filtered_buffers) do
-    local buffer_number_len = string.len(tostring(buffer.bufnr)) + 4
+    local buffer_number_len = 7
     table.insert(highlights, {
       line = i - 1,
       number = { start_col = 2, end_col = buffer_number_len,  hl = "Number" },

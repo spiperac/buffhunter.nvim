@@ -5,12 +5,14 @@ M.format_buffer_line = function(buffer, opts)
     local padding = math.floor(vim.o.columns * 0.7)
  - #buffer.name - #buffer.icon - 12
     if padding < 0 then padding = 0 end
-    
+
+    local bnum_len = string.len(tostring(buffer.bufnr))
+    local bnum_padding = 4 - bnum_len
     local parts = {}
     
     -- Table of buffers
     table.insert(parts, buffer.indicator)
-    table.insert(parts, buffer.bufnr .. ":")
+    table.insert(parts, buffer.bufnr .. string.rep(" ", bnum_padding))
     table.insert(parts, buffer.icon)
     table.insert(parts, buffer.name)
     table.insert(parts,string.rep(" ", padding))
