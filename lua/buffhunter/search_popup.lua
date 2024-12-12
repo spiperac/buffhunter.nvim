@@ -50,6 +50,12 @@ SearchPopup.open = function(list_win_pos)
   vim.api.nvim_buf_set_keymap(search_buf, 'n', '<CR>', ':lua require("buffhunter.list_popup").select_buffer()<CR>', keymap_opts)
   vim.api.nvim_buf_set_keymap(search_buf, 'i', '<CR>', '<Esc>:lua require("buffhunter.list_popup").select_buffer()<CR>', keymap_opts)
 
+  -- Splits
+  vim.api.nvim_buf_set_keymap(search_buf, 'i', '<c-s>', '<Esc>:lua require("buffhunter.list_popup").open_in_split("s")<CR>', keymap_opts)
+  vim.api.nvim_buf_set_keymap(search_buf, 'i', '<c-v>', '<Esc>:lua require("buffhunter.list_popup").open_in_split("v")<CR>', keymap_opts)
+  vim.api.nvim_buf_set_keymap(search_buf, 'n', '<c-s>', ':lua require("buffhunter.list_popup").open_in_split("s")<CR>', keymap_opts)
+  vim.api.nvim_buf_set_keymap(search_buf, 'n', '<c-v>', ':lua require("buffhunter.list_popup").open_in_split("v")<CR>', keymap_opts)
+
   -- Set up autocommand for filtering
   vim.api.nvim_buf_attach(search_buf, false, {
     on_lines = function()

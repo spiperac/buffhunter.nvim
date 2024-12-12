@@ -40,6 +40,8 @@ function M.setup(opts)
   shared_state.query = ""
   local keymap_opts = { noremap = true, silent = true }
   vim.api.nvim_set_keymap('n', '<ESC>', ':lua require("buffhunter").close()<CR>', keymap_opts)
+  vim.api.nvim_set_keymap('i', '<ESC>', '<ESC>:lua require("buffhunter").close()<CR>', keymap_opts)
+  
   -- Initialize both popups with shared state
   search_popup.setup(M.config, shared_state)
   list_popup.setup(M.config, shared_state)

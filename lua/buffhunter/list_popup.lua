@@ -158,4 +158,23 @@ ListPopup.select_buffer = function()
   end
 end
 
+ListPopup.open_in_split = function(orientation)
+  local selected_buffer = shared_state.filtered_buffers[shared_state.selected]
+  if #shared_state.filtered_buffers > 0 then
+    local split_cmd = ""
+
+    if orientation == "s" then 
+      split_cmd = "split"
+    elseif orientation == "v" then
+      split_cmd = "vsplit"
+    end
+
+    require('buffhunter').close()
+    pcall(function()
+      vim.cmd(split_cmd)
+      vim.api.nvim_set_current_buf(selected_buffer.bufnr)
+    end)
+  end
+end
+
 return ListPopup
